@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link rel="stylesheet" href="../css/styles.css" />
+	</head>
+	<body>
+		<div class="container">
+			<div>
+				<h1 class="header_text">Обирай їжу</h1>
+			</div>
+			<div class="gif_container">
+				<img src="https://media.giphy.com/media/lkdFa5gRV1DcGgelHw/giphy.gif" />
+			</div>
+
+			<div class="checkbox">
+				<div class="checkbox_option">
+					<img src="../images/pizza.png" alt="Піца" />
+					<span class="text">Піца</span>
+					<input type="checkbox" />
+				</div>
+
+				<div class="checkbox_option">
+					<img src="../images/sushi.png" alt="Суші" />
+					<span class="text">Суші</span>
+					<input type="checkbox" />
+				</div>
+
+				<div class="checkbox_option">
+					<img src="../images/mc.png" alt="Мак" />
+					<span class="text">Мак</span>
+					<input type="checkbox" />
+				</div>
+
+				<div class="checkbox_option">
+					<div class="gif_container">
+						<img
+							src="https://media.giphy.com/media/S8rv3eZBiseRyzfIF5/giphy.gif"
+						/>
+					</div>
+					<span class="text">Додати свій варіант</span>
+					<input type="text" />
+				</div>
+			</div>
+
+			<div class="buttons">
+				<button class="btn" onclick="submitFoodSelection()">Обрати</button>
+			</div>
+		</div>
+
+		<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+		<script>
+			(function () {
+				emailjs.init("kxZ5oIki61T2QU8Yj");
+			})();
+
+			function submitFoodSelection() {
+				var selectedFoods = [];
+				var checkboxes = document.querySelectorAll(
+					'input[type="checkbox"]:checked'
+				);
+				checkboxes.forEach(function (checkbox) {
+					var text = checkbox.parentNode.querySelector(".text").textContent;
+					selectedFoods.push(text);
+				});
+
+				var customOptionInput = document.querySelector('input[type="text"]');
+				if (customOptionInput.value.trim() !== "") {
+					selectedFoods.push(customOptionInput.value.trim());
+				}
+
+				if (selectedFoods.length === 0) {
+					alert("Обери хоча б щось!");
+					return;
+				}
+
+				var templateParams = {
+					foodSelections: selectedFoods.join(", "),
+				};
+
+				emailjs
+					.send("service_ppq2v11", "template_f2lx2c9", templateParams)
+					.then(function (response) {
+						window.location.href = "events.html";
+					});
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link rel="stylesheet" href="../css/styles.css" />
+	</head>
+	<body>
+		<div class="container">
+			<div>
+				<h1 class="header_text">Сходимо на вихідних кудись?</h1>
+			</div>
+			<div class="gif_container">
+				<img src="https://media.giphy.com/media/fYHC3rKjVcSyjtKFrQ/giphy.gif" />
+			</div>
+
+			<div class="checkbox">
+				<div class="checkbox_option">
+					<img src="../images/cinema.png" alt="Кіно" />
+					<span class="text">Кіно</span>
+					<input type="checkbox" />
+				</div>
+
+				<div class="checkbox_option">
+					<img src="../images/ice.png" height="110px" alt="Каток" />
+					<span class="text">Каток</span>
+					<input type="checkbox" />
+				</div>
+
+				<div class="checkbox_option">
+					<div class="gif_container">
+						<img
+							src="https://media.giphy.com/media/lOfxMqtP4kmpiCM9pC/giphy.gif"
+						/>
+					</div>
+					<span class="text">Твій варіант?</span>
+					<input type="text" />
+				</div>
+			</div>
+
+			<div class="buttons">
+				<button class="btn" onclick="submitEventSelection()">Вибрати</button>
+			</div>
+		</div>
+
+		<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+		<script>
+			(function () {
+				emailjs.init("kxZ5oIki61T2QU8Yj");
+			})();
+
+			function submitEventSelection() {
+				var selectedEvents = [];
+				var checkboxes = document.querySelectorAll(
+					'input[type="checkbox"]:checked'
+				);
+				checkboxes.forEach(function (checkbox) {
+					var text = checkbox.parentNode.querySelector(".text").textContent;
+					selectedEvents.push(text);
+				});
+
+				var customOptionInput = document.querySelector('input[type="text"]');
+				if (customOptionInput.value.trim() !== "") {
+					selectedEvents.push(customOptionInput.value.trim());
+				}
+
+				if (selectedEvents.length === 0) {
+					alert("Обери хоча б щось!");
+					return;
+				}
+
+				var templateParams = {
+					eventSelections: selectedEvents.join(", "),
+				};
+
+				emailjs
+					.send("service_ppq2v11", "template_76maajg", templateParams)
+					.then(function (response) {
+						window.location.href = "final.html";
+					});
+			}
+		</script>
+	</body>
+</html>
