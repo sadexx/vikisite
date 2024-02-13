@@ -92,3 +92,18 @@ body {
 .checkbox .checkbox_option:last-child {
 	margin-right: 0;
 }
+
+.gallery {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	margin: 0 auto;
+	margin-top: 20px;
+	max-width: 80%;
+	gap: 50px;
+}
+.photo {
+	width: 300px;
+	height: auto;
+	border: 2px solid black;
+}
